@@ -31,7 +31,7 @@ async def tag_team(context: ContextTypes.DEFAULT_TYPE):
     tags = "@Riviera188 @Riviera160 @Riviera711 @Riviera680 @Riviera170 @axmad4 @Riviera210 @Riviera105 @rivieraTech"
     await context.bot.send_message(
         chat_id=chat_id,
-        text=f"⚠️ 10 daqiqa ichida hech kim javob bermadi!\n\n{tags}",
+        text=f"Hurmatli mijoz, tez orada hodimlarimiz sizga javob berishadi. Kutganingiz uchun rahmat!\n\n@Riviera210 @Riviera160 @Riviera680 @Riviera170 @Riviera711",
     )
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
