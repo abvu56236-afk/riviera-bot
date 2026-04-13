@@ -25,14 +25,30 @@ active_jobs = {}
 
 async def tag_team(context: ContextTypes.DEFAULT_TYPE):
     chat_id = context.job.data["chat_id"]
+    round_num = context.job.data.get("round", 1)
+    
     if chat_id not in active_jobs:
         return
-    active_jobs.pop(chat_id, None)
+    
     tags = "@Riviera188 @Riviera160 @Riviera711 @Riviera680 @Riviera170 @axmad4 @Riviera210 @Riviera105 @rivieraTech"
-    await context.bot.send_message(
-        chat_id=chat_id,
-        text=f"Hurmatli mijoz, tez orada hodimlarimiz sizga javob berishadi. Kutganingiz uchun rahmat!\n\n@Riviera210 @Riviera160 @Riviera680 @Riviera170 @Riviera711",
-    )
+    
+    if round_num == 1:
+        await context.bot.send_message(
+            chat_id=chat_id,
+            text=f"Hurmatli mijoz, tez orada hodimlarimiz sizga javob berishadi. Kutganingiz uchun rahmat!\n\n{tags}",
+        )
+        job = context.job_queue.run_once(
+            tag_team,
+            when=10 * 60,
+            data={"chat_id": chat_id, "round": 2},
+        )
+        active_jobs[chat_id] = job
+    else:
+        active_jobs.pop(chat_id, None)
+        await context.bot.send_message(
+            chat_id=chat_id,
+            text=f"⚠️ Hali ham javob berilmadi!\n\n{tags}",
+        )
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not update.message or not update.effective_user:
